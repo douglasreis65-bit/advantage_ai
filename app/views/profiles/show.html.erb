@@ -1,11 +1,24 @@
 <div class="container py-5">
-  <div class="d-flex align-items-center mb-5 p-4 glass-card shadow-sm">
+  <div class="d-flex align-items-center mb-5 p-4 glass-card shadow-sm rounded-4">
     <div class="avatar-xl me-4">
-      <%= cl_image_tag current_user.photo.key, class: "rounded-circle shadow" if current_user.photo.attached? %>
+      <% if current_user.photo.attached? %>
+        <%= cl_image_tag current_user.photo.key, class: "rounded-circle shadow", style: "width: 100px; height: 100px; object-fit: cover;" %>
+      <% else %>
+        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center shadow" style="width: 100px; height: 100px;">
+          <i class="fas fa-user text-muted fa-3x"></i>
+        </div>
+      <% end %>
     </div>
-    <div>
-      <h2 class="fw-bold mb-0"><%= current_user.full_name %></h2>
-      <p class="text-muted"><%= current_user.email %></p>
+    <div class="flex-grow-1">
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <h2 class="fw-bold mb-0"><%= current_user.full_name.presence || "Configurar Nome" %></h2>
+          <p class="text-muted"><%= current_user.email %></p>
+        </div>
+        <%= link_to edit_user_registration_path, class: "btn btn-sm btn-light rounded-pill border" do %>
+          <i class="fas fa-user-edit me-2"></i>Editar Perfil
+        <% end %>
+      </div>
     </div>
   </div>
 
@@ -17,28 +30,35 @@
   </div>
 
   <div class="row g-4">
-    <% current_user.business_profiles.each do |profile| %>
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-4 h-100 business-card">
-          <div class="d-flex justify-content-between mb-3">
-            <span class="badge bg-light text-primary"><%= profile.segment %></span>
-            <div>
-              <%= link_to edit_business_profile_path(profile) do %><i class="fas fa-pen text-muted me-2"></i><% end %>
-              <%= link_to business_profile_path(profile), data: { turbo_method: :delete, turbo_confirm: "Remover esta empresa?" } do %>
-                <i class="fas fa-trash text-danger"></i>
-              <% end %>
+    <% if current_user.business_profiles.any? %>
+      <% current_user.business_profiles.each do |profile| %>
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm p-4 h-100 business-card rounded-4">
+            <div class="d-flex justify-content-between mb-3">
+              <span class="badge bg-soft-primary text-primary"><%= profile.segment %></span>
+              <div>
+                <%= link_to edit_business_profile_path(profile) do %><i class="fas fa-pen text-muted me-2"></i><% end %>
+                <%= link_to business_profile_path(profile), data: { turbo_method: :delete, turbo_confirm: "Remover esta empresa?" } do %>
+                  <i class="fas fa-trash text-danger"></i>
+                <% end %>
+              </div>
             </div>
+            <h4 class="fw-bold"><%= profile.name %></h4>
+            <p class="small text-muted mb-1"><i class="fas fa-shopping-cart me-2"></i><%= profile.platform %></p>
+            <p class="small mb-0 text-truncate">
+              <% if profile.is_whatsapp_lead %>
+                <span class="text-success fw-bold"><i class="fab fa-whatsapp me-2"></i>Lead WhatsApp</span>
+              <% else %>
+                <i class="fas fa-link me-2"></i><%= profile.website_url %>
+              <% end %>
+            </p>
           </div>
-          <h4 class="fw-bold"><%= profile.name %></h4>
-          <p class="small text-muted mb-1"><i class="fas fa-shopping-cart me-2"></i><%= profile.platform %></p>
-          <p class="small mb-0">
-            <% if profile.is_whatsapp_lead %>
-              <span class="text-success fw-bold"><i class="fab fa-whatsapp me-2"></i>Lead WhatsApp</span>
-            <% else %>
-              <i class="fas fa-link me-2"></i><%= profile.website_url %>
-            <% end %>
-          </p>
         </div>
+      <% end %>
+    <% else %>
+      <div class="col-12 text-center py-5">
+        <p class="text-muted">Você ainda não cadastrou nenhuma empresa.</p>
+        <%= link_to "Cadastrar minha primeira empresa", new_business_profile_path, class: "btn btn-primary rounded-pill" %>
       </div>
     <% end %>
   </div>

@@ -1,0 +1,29 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 glass-card p-5 shadow-lg rounded-4">
+      <h2 class="fw-bold mb-4">🏢 Cadastrar Empresa</h2>
+
+      <%= simple_form_for(@business_profile) do |f| %>
+        <%= f.input :name, label: "Nome da Empresa/Operação", placeholder: "Ex: Douglas Reis Store" %>
+
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :segment, label: "Segmento", placeholder: "Ex: Moda Masculina" %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :platform, collection: Analysis::PLATFORMS, label: "Plataforma" %>
+          </div>
+        </div>
+
+        <%= f.input :website_url, label: "URL do Site", placeholder: "https://..." %>
+
+        <div class="mb-4">
+          <%= f.input :is_whatsapp_lead, as: :boolean, label: "Essa operação foca em Leads para WhatsApp?" %>
+        </div>
+
+        <%= f.button :submit, "Salvar Empresa", class: "btn btn-primary w-100 rounded-pill py-3 mt-3 shadow" %>
+        <%= link_to "Cancelar", profile_path, class: "btn btn-link w-100 text-muted mt-2" %>
+      <% end %>
+    </div>
+  </div>
+</div>

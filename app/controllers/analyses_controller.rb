@@ -22,14 +22,18 @@ class AnalysesController < ApplicationController
   end
 
   def create
-    @analysis = Analysis.new(analysis_params)
-    @analysis.user = current_user
+    @analysis = current_user.analyses.build(analysis_params)
 
     if @analysis.save
-      # Aqui chamaremos o GeminiService.call(@analysis) em breve!
-      redirect_to analysis_path(@analysis), notice: "Análise criada! Processando diagnóstico..."
+      # Integramos o Synkra aqui.
+      # Se o processamento for rápido, chamamos direto.
+      # Se for pesado, futuramente usamos um Job (Sidekiq/SolidQueue).
+      SynkraAiService.new(@analysis).call
+
+      redirect_to analysis_path(@analysis), notice: "Análise criada! O SynkraAI está gerando seu diagnóstico..."
     else
-      render :new, status: :unprocessable_entity
+      # Se der erro, precisamos saber qual view re-renderizar
+      render @analysis.analysis_type == 'performance' ? :new_performance : :new_creative, status: :unprocessable_entity
     end
   end
 
@@ -37,9 +41,12 @@ class AnalysesController < ApplicationController
 
   def analysis_params
     params.require(:analysis).permit(
-      :business_name, :business_platform, :product_category,
-      :campaign_objective, :events_page_views, :events_add_to_cart,
-      :events_purchase, :campaign_csv, ad_artworks: []
+      :analysis_type,
+      :business_profile_id, # Importante para vincular à empresa cadastrada
+      :campaign_objective,
+      :campaign_csv,        # O arquivo de métricas para o aiox-core
+      ad_artworks: [],      # As artes para análise de criativos
+      event_manager_screenshots: [] # Prints do Gerenciador de Eventos
     )
   end
 end
