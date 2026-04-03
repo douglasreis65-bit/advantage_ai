@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg sticky-top navbar-glass">
+  <div class="container">
+    <%= link_to root_path, class: "navbar-brand fw-bold" do %>
+      AdVantage<span class="text-primary">AI</span>
+    <% end %>
+
+    <div class="navbar-nav ms-auto align-items-center">
+      <% if user_signed_in? %>
+        <%= link_to "Faça sua análise", select_type_analyses_path, class: "nav-link px-3" %>
+        <%= link_to "Meu Histórico", analyses_path, class: "nav-link px-3" %>
+        <%= link_to profile_path, class: "nav-link d-flex align-items-center ms-2" do %>
+          <div class="avatar-circle me-2">
+            <% if current_user.photo.attached? %>
+              <%= cl_image_tag current_user.photo.key, class: "avatar-img" %>
+            <% else %>
+              <i class="fas fa-user-circle"></i>
+            <% end %>
+          </div>
+          <span>Perfil</span>
+        <% end %>
+      <% else %>
+        <%= link_to "Login", new_user_session_path, class: "nav-link me-3" %>
+        <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary rounded-pill px-4 shadow-sm" %>
+      <% end %>
+    </div>
+  </div>
+</nav>

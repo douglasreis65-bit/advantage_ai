@@ -1,0 +1,55 @@
+<div class="container py-5" data-controller="form-toggle">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h2 class="mb-4">Configurar Análise: <%= params[:type] == 'report' ? 'Relatórios' : 'Criativos' %></h2>
+
+      <%= simple_form_for(@analysis) do |f| %>
+        <%= f.hidden_field :analysis_type, value: params[:type] %>
+
+        <div class="card p-4 mb-4 shadow-sm border-0 bg-white">
+          <h5 class="text-primary mb-3">1. Perfil do Cliente</h5>
+
+          <%= f.input :business_name, label: "Nome da Empresa" %>
+          <%= f.input :segment, label: "Segmento", placeholder: "O que você vende? (Ex: Cosméticos, Curso de Inglês)" %>
+
+          <div class="mb-3">
+            <label class="form-label">Plataforma de Checkout/E-commerce</label>
+            <input name="analysis[platform]" list="platforms-list" class="form-control" placeholder="Digite para buscar...">
+            <datalist id="platforms-list">
+              <% Analysis::PLATFORMS.each do |platform| %>
+                <option value="<%= platform %>">
+              <% end %>
+            </datalist>
+          </div>
+
+          <div class="row align-items-center mt-3">
+            <div class="col-md-7" data-form-toggle-target="siteInput">
+              <%= f.input :website_url, label: "Site / Landing Page", placeholder: "https://..." %>
+            </div>
+            <div class="col-md-5 pt-2">
+              <div class="form-check form-switch">
+                <%= f.check_box :is_whatsapp_lead, class: "form-check-input",
+                                data: { action: "change->form-toggle#toggleSite" } %>
+                <label class="form-check-label">Objetivo é Lead/WhatsApp</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-4 mb-4 shadow-sm border-0 bg-white">
+          <h5 class="text-primary mb-3">2. Dados da Campanha</h5>
+
+          <%= f.input :campaign_objective, collection: Analysis::META_OBJECTIVES, label: "Objetivo de Campanha (Igual ao Gerenciador da Meta)" %>
+
+          <% if params[:type] == 'report' %>
+            <%= f.input :campaign_csv, as: :file, label: "Subir Relatório (CSV/XLSX)", hint: "As métricas de funil serão extraídas automaticamente do arquivo." %>
+          <% else %>
+            <%= f.input :ad_artworks, as: :file, input_html: { multiple: true }, label: "Subir Artes dos Anúncios" %>
+          <% end %>
+        </div>
+
+        <%= f.button :submit, "Gerar Diagnóstico AdVantage", class: "btn btn-primary btn-lg w-100" %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="container py-5" data-controller="image-preview">
+  <div class="row justify-content-center">
+    <div class="col-md-8 glass-card p-5 shadow-lg rounded-4">
+      <h2 class="fw-bold mb-4">🎨 Nova Análise de Criativos</h2>
+
+      <%= simple_form_for(@analysis) do |f| %>
+        <%= f.hidden_field :analysis_type, value: 'creative' %>
+
+        <div class="mb-4">
+          <%= f.input :campaign_objective,
+                      collection: Analysis::META_OBJECTIVES,
+                      label: "Objetivo da Campanha",
+                      prompt: "Selecione o objetivo oficial da Meta..." %>
+        </div>
+
+        <div class="upload-zone p-4 mb-4 border-dashed rounded-3 text-center bg-light">
+          <label class="form-label d-block fw-bold">Subir Artes dos Anúncios</label>
+          <p class="text-muted small">Imagens ou Vídeos que serão analisados pela IA</p>
+
+          <%= f.input :ad_artworks, as: :file,
+                      input_html: {
+                        multiple: true,
+                        class: "d-none", # Esconde o input feio do navegador
+                        id: "actual-input",
+                        data: {
+                          image_preview_target: "input",
+                          action: "change->image-preview#preview"
+                        }
+                      }, label: false %>
+
+          <button type="button" class="btn btn-outline-primary mb-3" onclick="document.getElementById('actual-input').click()">
+            <i class="fas fa-cloud-upload-alt me-2"></i>Selecionar Arquivos
+          </button>
+
+          <div class="d-flex flex-wrap gap-3 justify-content-center mt-3" data-image-preview-target="container">
+          </div>
+        </div>
+
+        <%= f.button :submit, "Gerar Análise de Criativos", class: "btn btn-success btn-lg w-100 shadow mt-3" %>
+      <% end %>
+    </div>
+  </div>
+</div>

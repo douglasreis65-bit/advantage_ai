@@ -1,0 +1,40 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card border-0 bg-dark text-white p-4 rounded-4 shadow-lg mb-4 sticky-top" style="top: 100px;">
+        <h4 class="fw-bold mb-3">🛠️ Como Exportar o Relatório</h4>
+        <ol class="small opacity-75">
+          <li>No Gerenciador, vá em <strong>Colunas > Personalizar</strong>.</li>
+          <li>Ative: Cliques, Impressões, CTR, CPM, CPC, Compras, ROAS.</li>
+          <li>Clique em <strong>Exportar > Tabela de Dados (CSV)</strong>.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="glass-card p-5 shadow-lg">
+        <h2 class="fw-bold mb-4">📊 Diagnóstico de Performance</h2>
+
+        <%= simple_form_for(@analysis) do |f| %>
+          <%= f.hidden_field :analysis_type, value: 'performance' %>
+
+          <div class="mb-4">
+            <%= f.association :business_profile, collection: current_user.business_profiles, label: "Conta de Anúncio / Perfil da Empresa", prompt: "Selecione a empresa cadastrada..." %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.input :campaign_csv, as: :file, label: "Relatório Meta (CSV)", hint: "As métricas de funil serão extraídas daqui." %>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-bold">Capturas do Gerenciador de Eventos (Pixel/API)</label>
+            <p class="small text-muted">Suba prints das abas de eventos para validarmos a saúde do rastreamento.</p>
+            <%= f.input :event_manager_screenshots, as: :file, input_html: { multiple: true }, label: false %>
+          </div>
+
+          <%= f.button :submit, "Iniciar Diagnóstico AI", class: "btn btn-primary btn-lg w-100 shadow" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
