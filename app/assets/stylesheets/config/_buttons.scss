@@ -1,0 +1,16 @@
+.btn-primary-ai {
+  background: linear-gradient(135deg, $primary, $secondary);
+  color: $dark-bg;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 600;
+  display: inline-block;
+  border: none;
+  box-shadow: $shadow-glow;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba($primary, 0.4);
+    filter: brightness(1.1);
+  }
+}

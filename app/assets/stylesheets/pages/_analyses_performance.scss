@@ -1,0 +1,97 @@
+// app/assets/stylesheets/pages/_analyses_performance.scss
+
+.analyses-new-container {
+  // Efeito de fundo sutil focado em Performance (Ciano)
+  background: radial-gradient(circle at top right, rgba($primary, 0.03), transparent 600px);
+
+  .form-label-header {
+    display: block;
+    font-family: $font-header;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: $primary;
+    margin-bottom: 12px;
+  }
+
+  // Estilização dos Inputs "Glass"
+  .glass-input {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: $white !important;
+    border-radius: 12px !important;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      background: rgba(255, 255, 255, 0.07) !important;
+      border-color: $primary !important;
+      box-shadow: 0 0 15px rgba($primary, 0.15) !important;
+    }
+
+    option {
+      background: #111; // Fundo das opções do select
+      color: $white;
+    }
+  }
+
+  // Sidebar de Instruções
+  .instruction-step {
+    padding: 20px;
+    background: rgba($primary, 0.02);
+    border-radius: 16px;
+    border: 1px solid rgba($primary, 0.1);
+
+    .kpi-tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+
+      span { // Supondo que você injete spans via Stimulus
+        background: rgba($primary, 0.1);
+        color: $primary;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        border: 1px solid rgba($primary, 0.2);
+      }
+    }
+  }
+
+  // Área de Upload (Drag & Drop)
+  .upload-area {
+    border: 2px dashed rgba($primary, 0.2);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.01);
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: $primary;
+      background: rgba($primary, 0.03);
+    }
+
+    input[type="file"] {
+      cursor: pointer;
+    }
+  }
+
+  // Botão Customizado Advantage
+  .btn-advantage {
+    @include btn-gradient($primary, $secondary);
+    border-radius: 12px;
+    padding: 18px;
+    font-family: $font-header;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: $dark-bg;
+    border: none;
+    margin-top: 20px;
+  }
+}
+
+// Helpers
+.border-dashed { border-style: dashed !important; }
+.x-small { font-size: 0.7rem; }

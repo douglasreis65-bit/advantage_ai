@@ -1,12 +1,19 @@
-// Graphical variables
-@import "config/fonts";
-@import "config/colors";
-@import "config/bootstrap_variables";
+// 1. Configurações (Sempre primeiro!)
+@import "config/variables";
+@import "config/base";
 
-// External libraries
+// 2. Bibliotecas
 @import "bootstrap";
 @import "font-awesome";
 
-// Your CSS partials
-@import "components/index";
-@import "pages/index";
+// 3. Componentes
+@import "components/buttons";
+@import "components/navbar";
+@import "components/footer";
+
+// 4. Páginas
+@import "pages/home";
+@import "pages/analyses_selection";
+@import "pages/analyses_creative";
+@import "pages/analyses_performance";
+

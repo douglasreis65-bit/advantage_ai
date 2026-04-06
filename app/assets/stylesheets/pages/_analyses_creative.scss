@@ -1,0 +1,97 @@
+// app/assets/stylesheets/pages/_analyses_creative.scss
+
+.analyses-new-container {
+  background: radial-gradient(circle at top right, rgba($accent-purple, 0.05), transparent 400px),
+              radial-gradient(circle at bottom left, rgba($accent-blue, 0.05), transparent 400px);
+
+  // Custom Utility for Small Text (usado no seu HTML)
+  .x-small {
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .text-purple {
+    color: $accent-purple;
+    text-shadow: 0 0 8px rgba($accent-purple, 0.5);
+  }
+
+  // Estilização do Card de Critérios (Sidebar)
+  .glass-card {
+    @extend .glass-effect;
+    border-radius: 24px;
+    transition: all 0.3s ease;
+
+    h5 {
+      letter-spacing: -0.01em;
+      color: $white;
+    }
+
+    ul li {
+      transition: transform 0.2s ease;
+      &:hover {
+        transform: translateX(5px);
+        .text-purple { text-shadow: 0 0 12px $accent-purple; }
+      }
+    }
+  }
+
+  // Área Principal de Formulário/Upload (Coluna da Direita)
+  header {
+    h2 {
+      font-size: 2.5rem;
+      background: linear-gradient(to right, #fff, rgba(#fff, 0.5));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      color: $gray-muted;
+      max-width: 500px;
+    }
+  }
+
+  // Inputs e Labels Customizados para o Form
+  .form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba($white, 0.8);
+      margin-bottom: 8px;
+      margin-left: 4px;
+    }
+
+    input[type="text"], textarea, select {
+      width: 100%;
+      background: rgba($white, 0.03);
+      border: 1px solid $glass-border;
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: $white;
+      transition: all 0.3s ease;
+
+      &:focus {
+        background: rgba($white, 0.07);
+        border-color: $accent-purple;
+        box-shadow: 0 0 15px rgba($accent-purple, 0.1);
+        outline: none;
+      }
+    }
+  }
+}
+
+// Ajuste de Responsividade
+@media (max-width: $tablet) {
+  .analyses-new-container {
+    .sticky-top {
+      position: relative !important;
+      top: 0 !important;
+      margin-bottom: 2rem;
+    }
+    header h2 {
+      font-size: 1.8rem;
+    }
+  }
+}

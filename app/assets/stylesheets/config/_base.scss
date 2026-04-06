@@ -1,0 +1,99 @@
+// ==========================================================================
+// 1. MIXINS (Cérebro do Design System)
+// ==========================================================================
+
+@mixin btn-gradient($start, $end) {
+  background: linear-gradient(135deg, $start 0%, $end 100%);
+  border: none;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba($start, 0.3);
+  }
+}
+
+@mixin glass-card {
+  background: $glass;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid $glass-border;
+}
+
+// ==========================================================================
+// 2. CONFIGURAÇÕES GLOBAIS E RESET (Elimina faixas brancas)
+// ==========================================================================
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500;700&display=swap');
+
+// Reset agressivo para garantir fluidez entre Navbar e Body
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: #030305 !important; // Cor profunda do AdVantage AI
+  color: $white;
+  font-family: $font-body;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+// Garante que o conteúdo principal ocupe a tela toda sem margens laterais
+main, .main-container {
+  padding: 0 !important;
+  margin: 0 !important;
+  display: block;
+}
+
+h1, h2, h3, h4 {
+  font-family: $font-header;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: $white;
+}
+
+a {
+  text-decoration: none !important;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+// ==========================================================================
+// 3. CLASSES UTILITÁRIAS
+// ==========================================================================
+
+.glass-effect {
+  @include glass-card;
+}
+
+// Alinhamento para as mensagens de notice/alert do Devise
+.notice, .alert {
+  margin: 0 !important;
+  text-align: center;
+  font-size: 0.85rem;
+  padding: 10px;
+  position: absolute;
+  width: 100%;
+  z-index: 1001; // Fica acima da navbar se necessário
+}
+
+.x-small {
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.text-purple {
+  color: $secondary;
+  text-shadow: 0 0 8px rgba($secondary, 0.4);
+}
+
+// Helper para esconder elementos vazios (como as tags <p> do notice)
+p:empty {
+  display: none;
+}

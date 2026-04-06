@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :analyses, only: [:index, :show, :create, :new] do
     collection do
       get :select_type
+      get :new_performance # A rota que deu erro
+      get :new_creative    # A rota do outro card
     end
   end
 

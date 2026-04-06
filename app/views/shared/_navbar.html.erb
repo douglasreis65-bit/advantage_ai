@@ -1,27 +1,50 @@
-<nav class="navbar navbar-expand-lg sticky-top navbar-glass">
-  <div class="container">
-    <%= link_to root_path, class: "navbar-brand fw-bold" do %>
-      AdVantage<span class="text-primary">AI</span>
+<nav class="navbar navbar-expand-lg navbar-advantage">
+  <div class="container-fluid">
+    <%# Logo e Nome do Projeto %>
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag "logo.png", alt: "AdVantage AI" if Rails.application.assets.find_asset('logo.png') %>
+      <span>AdVantage<span style="color: #00F5FF;">AI</span></span>
     <% end %>
 
-    <div class="navbar-nav ms-auto align-items-center">
-      <% if user_signed_in? %>
-        <%= link_to "Faça sua análise", select_type_analyses_path, class: "nav-link px-3" %>
-        <%= link_to "Meu Histórico", analyses_path, class: "nav-link px-3" %>
-        <%= link_to profile_path, class: "nav-link d-flex align-items-center ms-2" do %>
-          <div class="avatar-circle me-2">
-            <% if current_user.photo.attached? %>
-              <%= cl_image_tag current_user.photo.key, class: "avatar-img" %>
-            <% else %>
-              <i class="fas fa-user-circle"></i>
-            <% end %>
-          </div>
-          <span>Perfil</span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "Nova Análise", select_type_analyses_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Dashboard", "#", class: "nav-link" %>
+          </li>
+
+          <li class="nav-item dropdown ms-3">
+            <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <% if current_user.respond_to?(:photo) && current_user.photo.attached? %>
+                <%= cl_image_tag current_user.photo.key, class: "avatar" %>
+              <% else %>
+                <img src="https://kitt.lewagon.com/placeholder/users/ssaunier" class="avatar" alt="User Avatar">
+              <% end %>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><%= link_to "Perfil", "#", class: "dropdown-item" %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <%= link_to "Sair", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item text-danger" %>
+              </li>
+            </ul>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Começar agora", new_user_registration_path, class: "btn-advantage ms-lg-3 px-4 py-2 text-dark", style: "font-size: 0.85rem;" %>
+          </li>
         <% end %>
-      <% else %>
-        <%= link_to "Login", new_user_session_path, class: "nav-link me-3" %>
-        <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary rounded-pill px-4 shadow-sm" %>
-      <% end %>
+      </ul>
     </div>
   </div>
 </nav>

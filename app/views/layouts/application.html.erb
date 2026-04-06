@@ -25,8 +25,22 @@
 
   <body>
     <%= render "shared/navbar" %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+
+    <%# Só renderiza se houver mensagem, evitando o espaço em branco %>
+    <% if notice %>
+      <div class="alert alert-info alert-dismissible fade show m-0 border-0 rounded-0" role="alert" style="background: rgba(0, 245, 255, 0.1); color: #00F5FF; font-size: 0.8rem; text-align: center;">
+        <%= notice %>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="alert alert-warning alert-dismissible fade show m-0 border-0 rounded-0" role="alert" style="background: rgba(112, 0, 255, 0.1); color: #7000FF; font-size: 0.8rem; text-align: center;">
+        <%= alert %>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

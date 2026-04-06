@@ -1,0 +1,197 @@
+// app/assets/stylesheets/pages/_analyses_selection.scss
+
+.selection-container {
+  // 1. FUNDO COM PROFUNDIDADE (Não é preto puro)
+  background-color: #030305;
+  background-image:
+    radial-gradient(at top right, rgba($secondary, 0.08), transparent 45%),
+    radial-gradient(at center left, rgba($accent-blue, 0.05), transparent 40%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3%3FfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3%3F/filter%3%3F%3Frect width='100%' height='100%' filter='url(%23noiseFilter)'/%3%3F/svg%3%3F");
+  // O SVG acima adiciona um ruído de fundo muito sutil, luxuoso.
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 20px;
+  position: relative;
+  overflow: hidden;
+
+  // Header Refinado
+  .selection-header {
+    text-align: center;
+    margin-bottom: 90px;
+    z-index: 10;
+
+    // Badge Super Discreto
+    .badge-ai {
+      display: inline-block;
+      padding: 5px 14px;
+      border: 1px solid rgba($white, 0.1);
+      border-radius: 100px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: $white;
+      background: rgba($white, 0.03);
+      backdrop-filter: blur(5px);
+      margin-bottom: 25px;
+    }
+
+    // Título Menor e Sóbrio (Off-White)
+    h1 {
+      font-size: 2.8rem;
+      letter-spacing: -0.05em;
+      color: $white;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.1;
+    }
+
+    // Descrição Sutil
+    p {
+      color: rgba($white, 0.6);
+      font-size: 1.05rem;
+      max-width: 450px;
+      margin: 20px auto 0;
+      font-weight: 300;
+    }
+  }
+
+  // Grid de Cards com Respiro
+  .selection-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(340px, 1fr));
+    gap: 50px;
+    width: 100%;
+    max-width: 900px;
+    z-index: 10;
+  }
+
+  // O CARD PREMIUM (Onde a mágica acontece)
+  .analysis-card {
+    text-decoration: none;
+    background: rgba(12, 12, 16, 0.5); // Fundo do card
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 40px;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    position: relative;
+    overflow: hidden;
+
+    // Borda Sutil (Fica colorida no hover)
+    border: 1px solid rgba($white, 0.06);
+
+    // Efeito de Glow de Hover Sutil (Escondido)
+    &:after {
+      content: '';
+      position: absolute;
+      width: 100%; height: 100%;
+      top: 0; left: 0;
+      border-radius: 40px;
+      transition: all 0.5s ease;
+      z-index: -1;
+    }
+
+    // Ícones Vetoriais Técnicos (Removendo o air infantil)
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      color: rgba($white, 0.3); // Discreto por padrão
+      transition: all 0.5s ease;
+    }
+
+    // Título e Descrição (Off-White e Cinza)
+    h3 {
+      color: $white;
+      font-weight: 600;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: rgba($white, 0.5);
+      line-height: 1.6;
+      font-weight: 300;
+      transition: all 0.5s ease;
+    }
+
+    // Link "Iniciar" (Discreto, color no hover)
+    .card-link {
+      margin-top: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba($white, 0.4);
+      display: flex;
+      align-items: center;
+      transition: all 0.5s ease;
+
+      i { margin-left: 10px; transition: transform 0.3s ease; }
+    }
+
+    // --- ESTILOS DE HOVER ---
+
+    // Hover PERFORMANCE (Ciano Sutil)
+    &.card-performance:hover {
+      border-color: rgba($primary, 0.4);
+      transform: translateY(-10px) scale(1.02);
+
+      .card-icon {
+        color: $primary;
+        text-shadow: 0 0 20px $primary;
+      }
+
+      p { color: rgba($white, 0.8); }
+
+      .card-link {
+        color: $primary;
+        i { transform: translateX(5px); }
+      }
+
+      &:after {
+        box-shadow: 0 0 100px rgba($primary, 0.08) inset;
+      }
+    }
+
+    // Hover CRIATIVO (Roxo Sutil)
+    &.card-creative:hover {
+      border-color: rgba($secondary, 0.4);
+      transform: translateY(-10px) scale(1.02);
+
+      .card-icon {
+        color: $secondary;
+        text-shadow: 0 0 20px $secondary;
+      }
+
+      p { color: rgba($white, 0.8); }
+
+      .card-link {
+        color: $secondary;
+        i { transform: translateX(5px); }
+      }
+
+      &:after {
+        box-shadow: 0 0 100px rgba($secondary, 0.08) inset;
+      }
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: $tablet) {
+  .selection-container {
+    padding: 60px 20px;
+    .selection-header h1 { font-size: 2.2rem; }
+    .selection-cards-grid { grid-template-columns: 1fr; gap: 30px; }
+    .analysis-card { padding: 40px; }
+  }
+}

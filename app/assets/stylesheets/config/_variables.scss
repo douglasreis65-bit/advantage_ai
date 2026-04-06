@@ -1,0 +1,31 @@
+// app/assets/stylesheets/config/_variables.scss
+
+// 1. Tipografia (Google Fonts)
+$font-header: 'Outfit', sans-serif;
+$font-body: 'Inter', sans-serif;
+
+// 2. Cores "AdVantage AI"
+$dark-bg:      #050505;
+$dark-card:    #0f1115;
+$white:        #F8FAFC;
+$gray-muted:   #94A3B8;
+
+// Cores de Acento (Performance vs Criativo)
+$primary:      #00F5FF; // Ciano (Performance)
+$secondary:    #7000FF; // Roxo (Criativo)
+
+// Aliases para evitar erros nos arquivos de páginas
+$accent-cyan:   $primary;
+$accent-purple: $secondary;
+$accent-blue:   #3b82f6;
+$accent-deep-p: #4c1d95;
+
+// 3. Efeitos de Destaque
+$glass:        rgba(255, 255, 255, 0.03);
+$glass-border: rgba(255, 255, 255, 0.08);
+$shadow-glow:  0 0 20px rgba($primary, 0.2);
+
+// 4. Breakpoints para Responsividade
+$mobile: 576px;
+$tablet: 768px;
+$desktop: 1024px;

@@ -5,7 +5,8 @@ class User < ApplicationRecord
 
   has_one_attached :photo
   has_many :business_profiles, dependent: :destroy
-
+  has_many :analyses, dependent: :destroy
+  
   # Validação para não deixar o nome em branco no perfil
   validates :full_name, presence: true, on: :update
 end

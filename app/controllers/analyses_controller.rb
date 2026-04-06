@@ -2,19 +2,21 @@ class AnalysesController < ApplicationController
   before_action :authenticate_user!
 
   def select_type
-  # Apenas renderiza a página de escolha
+    # Apenas renderiza a página de escolha (index ou similar)
   end
+
   def show
-    # Busca pelo ID ou pelo Token Público
-    @analysis = Analysis.find_by(id: params[:id]) || Analysis.find_by!(public_token: params[:id])
+    # Busca pelo ID ou pelo Token Público de forma segura
+    @analysis = current_user.analyses.find_by(id: params[:id]) ||
+                Analysis.find_by!(public_token: params[:id])
   end
 
   def new
-    @analysis = Analysis.new
+    # Inicializa o objeto com o tipo já definido para que o simple_form saiba o que exibir
+    @analysis = current_user.analyses.build(analysis_type: params[:type])
 
-    # Se o tipo for performance, renderiza a view de performance,
-    # caso contrário, a de criativos.
-    if params[:type] == 'performance'
+    # Renderização condicional baseada no parâmetro
+    if @analysis.analysis_type == 'performance'
       render :new_performance
     else
       render :new_creative
@@ -25,15 +27,15 @@ class AnalysesController < ApplicationController
     @analysis = current_user.analyses.build(analysis_params)
 
     if @analysis.save
-      # Integramos o Synkra aqui.
-      # Se o processamento for rápido, chamamos direto.
-      # Se for pesado, futuramente usamos um Job (Sidekiq/SolidQueue).
+      # Dispara o Motor SynkraAI
+      # Nota: Como o arquivo pode ser grande, o .call deve ser otimizado ou movido para Job
       SynkraAiService.new(@analysis).call
 
-      redirect_to analysis_path(@analysis), notice: "Análise criada! O SynkraAI está gerando seu diagnóstico..."
+      redirect_to analysis_path(@analysis), notice: "Análise iniciada! O SynkraAI está processando seus dados..."
     else
-      # Se der erro, precisamos saber qual view re-renderizar
-      render @analysis.analysis_type == 'performance' ? :new_performance : :new_creative, status: :unprocessable_entity
+      # IMPORTANTE: Se o save falhar (ex: faltou o CSV), precisamos manter o estado na View
+      view_to_render = @analysis.analysis_type == 'performance' ? :new_performance : :new_creative
+      render view_to_render, status: :unprocessable_entity
     end
   end
 
@@ -42,11 +44,14 @@ class AnalysesController < ApplicationController
   def analysis_params
     params.require(:analysis).permit(
       :analysis_type,
-      :business_profile_id, # Importante para vincular à empresa cadastrada
+      :business_profile_id,
       :campaign_objective,
-      :campaign_csv,        # O arquivo de métricas para o aiox-core
-      ad_artworks: [],      # As artes para análise de criativos
-      event_manager_screenshots: [] # Prints do Gerenciador de Eventos
+      :purchase_type,
+      :conversion_location,
+      :performance_goal,
+      :campaign_csv,
+      ad_artworks: [],
+      event_manager_screenshots: []
     )
   end
 end

@@ -1,40 +1,139 @@
-<div class="container py-5">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card border-0 bg-dark text-white p-4 rounded-4 shadow-lg mb-4 sticky-top" style="top: 100px;">
-        <h4 class="fw-bold mb-3">🛠️ Como Exportar o Relatório</h4>
-        <ol class="small opacity-75">
-          <li>No Gerenciador, vá em <strong>Colunas > Personalizar</strong>.</li>
-          <li>Ative: Cliques, Impressões, CTR, CPM, CPC, Compras, ROAS.</li>
-          <li>Clique em <strong>Exportar > Tabela de Dados (CSV)</strong>.</li>
-        </ol>
+<%# app/views/analyses/new_performance.html.erb %>
+
+<div class="selection-container py-5" data-controller="campaign-form">
+  <div class="container">
+    <div class="row g-5">
+
+      <%# COLUNA DA ESQUERDA: GUIA DINÂMICO %>
+      <div class="col-lg-4">
+        <div class="analysis-card p-4 sticky-top" style="top: 100px; background: rgba(12, 12, 16, 0.6);">
+          <div class="d-flex align-items-center mb-4">
+            <div class="rounded-circle me-2" style="width: 10px; height: 10px; background-color: #00F5FF; box-shadow: 0 0 12px #00F5FF;"></div>
+            <h5 class="fw-bold m-0 text-white">Setup de Extração</h5>
+          </div>
+
+          <div id="setup-guide">
+            <p class="x-small opacity-50 mb-4 text-white">O AdVantage AI processa os dados do seu CSV para gerar o diagnóstico.</p>
+
+            <%# Este bloco aparece quando o objetivo é selecionado %>
+            <div data-campaign-form-target="instructionBox" class="d-none">
+              <span class="badge-ai mb-2" style="font-size: 0.6rem;">Colunas Obrigatórias</span>
+              <div class="kpi-tag-list mt-2 d-flex flex-wrap" data-campaign-form-target="kpiList">
+                <%# KPIs inseridos via JS %>
+              </div>
+              <p class="x-small opacity-50 mt-4 mb-0 text-white">
+                No Gerenciador: <br><strong>Colunas > Personalizar > Exportar CSV</strong>.
+              </p>
+            </div>
+
+            <%# Instrução inicial padrão %>
+            <div data-campaign-form-target="initialInstruction" class="p-4 border border-dashed rounded-4 text-center opacity-50" style="border-color: rgba(0, 245, 255, 0.2);">
+              <p class="x-small mb-0 text-white">Selecione o objetivo da campanha para visualizar as instruções de exportação.</p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="col-md-8">
-      <div class="glass-card p-5 shadow-lg">
-        <h2 class="fw-bold mb-4">📊 Diagnóstico de Performance</h2>
+      <%# COLUNA DA DIREITA: FORMULÁRIO %>
+      <div class="col-lg-8">
+        <div class="analysis-card p-5" style="background: rgba(12, 12, 16, 0.7);">
+          <header class="mb-5">
+            <div class="badge-ai mb-2">Performance Engine v3.0</div>
+            <h2 class="fw-bold text-white mb-2">Diagnóstico de Performance</h2>
+            <p class="opacity-50 text-white">Preencha os detalhes técnicos para calibrar a análise dos agentes AI.</p>
+          </header>
 
-        <%= simple_form_for(@analysis) do |f| %>
-          <%= f.hidden_field :analysis_type, value: 'performance' %>
+          <%= simple_form_for(@analysis) do |f| %>
+            <%= f.hidden_field :analysis_type, value: 'performance' %>
 
-          <div class="mb-4">
-            <%= f.association :business_profile, collection: current_user.business_profiles, label: "Conta de Anúncio / Perfil da Empresa", prompt: "Selecione a empresa cadastrada..." %>
-          </div>
+            <%# 1. CONTA DE ANÚNCIO %>
+            <div class="mb-4">
+              <label class="form-label text-white-50 x-small fw-bold text-uppercase">Conta de Anúncio</label>
+              <%= f.association :business_profile,
+                  collection: current_user.business_profiles,
+                  label: false,
+                  prompt: "Selecione a empresa vinculada...",
+                  input_html: { class: "form-select glass-input text-white" } %>
+            </div>
 
-          <div class="mb-4">
-            <%= f.input :campaign_csv, as: :file, label: "Relatório Meta (CSV)", hint: "As métricas de funil serão extraídas daqui." %>
-          </div>
+            <div class="row">
+              <%# 2. OBJETIVO (O GATILHO INICIAL) %>
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-white-50 x-small fw-bold text-uppercase">Objetivo da Campanha</label>
+                <%= f.input :campaign_objective,
+                    collection: [['Vendas', 'vendas'], ['Leads', 'leads'], ['Tráfego', 'trafego'], ['Engajamento', 'engajamento'], ['Reconhecimento', 'reconhecimento']],
+                    label: false,
+                    prompt: "Selecione...",
+                    input_html: {
+                      data: { action: "change->campaign-form#showPurchaseType" },
+                      class: "form-select glass-input text-white"
+                    } %>
+              </div>
 
-          <div class="mb-4">
-            <label class="form-label fw-bold">Capturas do Gerenciador de Eventos (Pixel/API)</label>
-            <p class="small text-muted">Suba prints das abas de eventos para validarmos a saúde do rastreamento.</p>
-            <%= f.input :event_manager_screenshots, as: :file, input_html: { multiple: true }, label: false %>
-          </div>
+              <%# 3. TIPO DE COMPRA (CONDICIONAL) %>
+              <div class="col-md-6 mb-4 d-none" data-campaign-form-target="stepPurchase">
+                <label class="form-label text-white-50 x-small fw-bold text-uppercase">Tipo de Compra</label>
+                <%= f.input :purchase_type,
+                    collection: [['Leilão', 'leilao'], ['Reserva', 'reserva']],
+                    label: false,
+                    prompt: "Escolha o modelo...",
+                    input_html: {
+                      data: { action: "change->campaign-form#showLocation" },
+                      class: "form-select glass-input text-white"
+                    } %>
+              </div>
+            </div>
 
-          <%= f.button :submit, "Iniciar Diagnóstico AI", class: "btn btn-primary btn-lg w-100 shadow" %>
-        <% end %>
+            <%# 4. LOCAL DA CONVERSÃO %>
+            <div class="mb-4 d-none" data-campaign-form-target="stepLocation">
+              <label class="form-label text-white-50 x-small fw-bold text-uppercase">Local da Conversão</label>
+              <%= f.input :conversion_location,
+                  collection: [],
+                  label: false,
+                  prompt: "Onde ocorre a conversão?",
+                  input_html: {
+                    data: {
+                      campaign_form_target: "locationSelect",
+                      action: "change->campaign-form#showGoal"
+                    },
+                    class: "form-select glass-input text-white"
+                  } %>
+            </div>
+
+            <%# 5. META DE DESEMPENHO %>
+            <div class="mb-4 d-none" data-campaign-form-target="stepGoal">
+              <label class="form-label text-white-50 x-small fw-bold text-uppercase">Meta de Desempenho</label>
+              <%= f.input :performance_goal,
+                  collection: [],
+                  label: false,
+                  prompt: "Qual a meta principal?",
+                  input_html: {
+                    data: {
+                      campaign_form_target: "goalSelect",
+                      action: "change->campaign-form#finalStep"
+                    },
+                    class: "form-select glass-input text-white"
+                  } %>
+            </div>
+
+            <%# 6. UPLOAD E BOTÃO FINAL %>
+            <div class="d-none pt-4 mt-5 border-top border-white border-opacity-10" data-campaign-form-target="stepUpload">
+              <div class="mb-5">
+                <label class="form-label text-white-50 x-small fw-bold text-uppercase">Relatório Meta (CSV)</label>
+                <div class="upload-area p-5 text-center border rounded-4" style="border-style: dashed !important; border-color: rgba(255,255,255,0.1) !important;">
+                  <i class="fa-solid fa-file-csv mb-3 display-6 text-primary"></i>
+                  <%= f.input :campaign_csv, as: :file, label: false, input_html: { class: "form-control bg-transparent text-white border-0 shadow-none" } %>
+                  <p class="x-small opacity-50 mt-2 mb-0 text-white">Clique ou arraste o arquivo exportado do Gerenciador.</p>
+                </div>
+              </div>
+
+              <%= f.button :submit, "Lançar Diagnóstico AI", class: "btn-advantage w-100 py-3 shadow-lg fw-bold", style: "background: #00F5FF; color: #030305; border: none; border-radius: 12px;" %>
+            </div>
+
+          <% end %>
+        </div>
       </div>
+
     </div>
   </div>
 </div>

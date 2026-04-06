@@ -1,10 +1,54 @@
-// Define variables for your color scheme
+// ==========================================================================
+// CONFIG / COLORS & MIXINS (AD-VANTAGE AI CORE)
+// ==========================================================================
 
-// For example:
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+// 1. Cores Primitivas (Pontes para o Bootstrap não quebrar)
+$white:         #ffffff;
+$black:         #000000;
+$light-gray:    #f8f9fa;
+$gray:          $light-gray; // Resolve o erro de variável indefinida $gray
+$blue:          #0072ff;     // Resolve o erro de variável indefinida $blue
+$red:           #ff4d4d;     // Prevenção para erro de $red
+$green:         #00ff88;     // Prevenção para erro de $green
+$yellow:        #ffc107;     // Prevenção para erro de $yellow
+
+// 2. Cores de Marca (Identidade Advantage AI)
+$deep-bg:       #0a0c10;     // Fundo principal Dark Luxo
+$accent-cyan:   #00d4ff;     // Engine: Performance
+$accent-blue:   #0072ff;     // Gradient: Performance
+$accent-purple: #a855f7;     // Engine: Criativos
+$accent-deep-p: #6b21a8;     // Gradient: Criativos
+
+// 3. Camadas de Transparência (Glassmorphism)
+$glass-bg:      rgba(255, 255, 255, 0.03);
+$glass-border:  rgba(255, 255, 255, 0.1);
+$text-muted:    rgba(255, 255, 255, 0.4);
+
+// 4. Status & Feedback (Variáveis Customizadas)
+$error-red:     $red;
+$success-green: $green;
+$warning-gold:  $yellow;
+
+// ==========================================================================
+// MIXINS REUTILIZÁVEIS
+// ==========================================================================
+
+// Mixin essencial para o "Efeito Vidro" (Glassmorphism)
+@mixin glass-card {
+  background: $glass-bg;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid $glass-border;
+  border-radius: 28px;
+}
+
+// Mixin para botões ou elementos com gradiente dinâmico
+@mixin btn-gradient($start, $end) {
+  background: linear-gradient(135deg, $start 0%, $end 100%);
+  border: none;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba($start, 0.3);
+  }
+}

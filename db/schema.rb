@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_03_150842) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_06_175912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -49,6 +49,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_03_150842) do
     t.string "business_platform"
     t.bigint "business_profile_id", null: false
     t.string "campaign_objective"
+    t.string "conversion_location"
     t.datetime "created_at", null: false
     t.integer "events_add_to_cart"
     t.integer "events_initiate_checkout"
@@ -56,8 +57,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_03_150842) do
     t.integer "events_purchase"
     t.integer "events_view_content"
     t.boolean "is_whatsapp_lead"
+    t.string "performance_goal"
     t.string "product_category"
     t.string "public_token"
+    t.string "purchase_type"
     t.string "segment"
     t.date "target_date"
     t.datetime "updated_at", null: false

@@ -1,43 +1,54 @@
-<div class="container py-5" data-controller="image-preview">
-  <div class="row justify-content-center">
-    <div class="col-md-8 glass-card p-5 shadow-lg rounded-4">
-      <h2 class="fw-bold mb-4">🎨 Nova Análise de Criativos</h2>
+<div class="analyses-new-container py-5" data-controller="creative-form">
+  <div class="container">
+    <div class="row g-5">
 
-      <%= simple_form_for(@analysis) do |f| %>
-        <%= f.hidden_field :analysis_type, value: 'creative' %>
+      <div class="col-lg-4">
+        <div class="glass-card p-4 sticky-top" style="top: 20px;">
+          <div class="d-flex align-items-center mb-4">
+            <div class="rounded-circle me-2" style="width: 10px; height: 10px; background-color: #a855f7; box-shadow: 0 0 10px #a855f7;"></div>
+            <h5 class="fw-bold m-0">Critérios de Análise</h5>
+          </div>
 
-        <div class="mb-4">
-          <%= f.input :campaign_objective,
-                      collection: Analysis::META_OBJECTIVES,
-                      label: "Objetivo da Campanha",
-                      prompt: "Selecione o objetivo oficial da Meta..." %>
-        </div>
+          <div id="creative-guide">
+            <p class="small opacity-50 mb-4 text-white">Nossa IA processa os criativos sob três pilares:</p>
 
-        <div class="upload-zone p-4 mb-4 border-dashed rounded-3 text-center bg-light">
-          <label class="form-label d-block fw-bold">Subir Artes dos Anúncios</label>
-          <p class="text-muted small">Imagens ou Vídeos que serão analisados pela IA</p>
+            <ul class="list-unstyled">
+              <li class="mb-3 d-flex align-items-start gap-2">
+                <span class="text-purple">●</span>
+                <div>
+                  <strong class="small d-block text-white">Retenção Visual (Hook)</strong>
+                  <span class="x-small opacity-50">Impacto nos primeiros 3 segundos para evitar o scroll.</span>
+                </div>
+              </li>
+              </ul>
 
-          <%= f.input :ad_artworks, as: :file,
-                      input_html: {
-                        multiple: true,
-                        class: "d-none", # Esconde o input feio do navegador
-                        id: "actual-input",
-                        data: {
-                          image_preview_target: "input",
-                          action: "change->image-preview#preview"
-                        }
-                      }, label: false %>
-
-          <button type="button" class="btn btn-outline-primary mb-3" onclick="document.getElementById('actual-input').click()">
-            <i class="fas fa-cloud-upload-alt me-2"></i>Selecionar Arquivos
-          </button>
-
-          <div class="d-flex flex-wrap gap-3 justify-content-center mt-3" data-image-preview-target="container">
+            <div class="mt-4 p-3 rounded-4" style="background: rgba(168, 85, 247, 0.05); border: 1px dashed rgba(168, 85, 247, 0.2);">
+              <p class="x-small opacity-50 mb-0 text-center">
+                Dica: Use arquivos em alta resolução para precisão de contraste.
+              </p>
+            </div>
           </div>
         </div>
+      </div>
 
-        <%= f.button :submit, "Gerar Análise de Criativos", class: "btn btn-success btn-lg w-100 shadow mt-3" %>
-      <% end %>
+      <div class="col-lg-8">
+        <div class="glass-card p-5">
+          <header class="mb-5">
+            <span class="text-purple fw-bold x-small text-uppercase tracking-wider">Novo Engine</span>
+            <h2 class="fw-bold">Análise de Criativo</h2>
+            <p>Faça o upload do seu anúncio para receber insights baseados em neuro-marketing.</p>
+          </header>
+
+          <div class="creative-form">
+             <div class="form-group">
+                <label>Nome da Campanha</label>
+                <input type="text" placeholder="Ex: Lançamento Verão 2026">
+             </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

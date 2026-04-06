@@ -1,28 +1,41 @@
-<div class="container py-5 text-center">
-  <h2 class="fw-bold mb-2">O que vamos otimizar hoje?</h2>
-  <p class="text-muted mb-5">Escolha o foco do seu diagnóstico para começar.</p>
+<div class="selection-container">
 
-  <div class="row g-4 justify-content-center">
-    <div class="col-md-5">
-      <div class="card h-100 border-0 shadow-lg glass-card hover-up">
-        <div class="card-body p-5">
-          <div class="display-3 mb-3 text-primary">📊</div>
-          <h3 class="fw-bold">Performance de Campanha</h3>
-          <p class="text-muted">Análise profunda de métricas (CTR, CPM, CPA) e extração automática de gargalos do funil via relatório CSV.</p>
-          <%= link_to "Iniciar Performance", new_analysis_path(type: 'performance'), class: "btn btn-primary w-100 rounded-pill py-3 mt-3 shadow" %>
-        </div>
-      </div>
-    </div>
+  <header class="selection-header">
+    <div class="badge-ai">Seleção do Motor AI</div>
+    <h1>O que vamos otimizar hoje?</h1>
+    <p>Escolha o foco do seu diagnóstico para que nossos agentes processem os dados com precisão técnico-visual.</p>
+  </header>
 
-    <div class="col-md-5">
-      <div class="card h-100 border-0 shadow-lg glass-card hover-up">
-        <div class="card-body p-5">
-          <div class="display-3 mb-3 text-success">🎨</div>
-          <h3 class="fw-bold">Análise de Criativos</h3>
-          <p class="text-muted">Diagnóstico visual e de copy. Suba suas artes para avaliar ganchos, retenção e clareza da oferta pela IA.</p>
-          <%= link_to "Analisar Criativos", new_analysis_path(type: 'creative'), class: "btn btn-success w-100 rounded-pill py-3 mt-3 shadow" %>
+  <div class="selection-cards-grid">
+
+    <%# Card 1: Performance - Aponta para 'new' passando o parâmetro type %>
+    <%= link_to new_analysis_path(type: 'performance'), class: "analysis-card card-performance" do %>
+      <div>
+        <div class="card-icon">
+          <i class="fa-solid fa-server"></i>
         </div>
+        <h3>Diagnóstico de Performance</h3>
+        <p>Análise profunda de métricas (CTR, CPA) e extração automática de gargalos do funil via relatório CSV.</p>
       </div>
-    </div>
+      <div class="card-link">
+        Iniciar Motor <i class="fa-solid fa-arrow-right-long"></i>
+      </div>
+    <% end %>
+
+    <%# Card 2: Creative - Aponta para 'new' passando o parâmetro type %>
+    <%= link_to new_analysis_path(type: 'creative'), class: "analysis-card card-creative" do %>
+      <div>
+        <div class="card-icon">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+        <h3>Diagnóstico Visual & Copy</h3>
+        <p>Suba suas artes para avaliar ganchos, retenção de atenção e clareza da oferta pela IA generativa.</p>
+      </div>
+      <div class="card-link">
+        Iniciar Motor <i class="fa-solid fa-arrow-right-long"></i>
+      </div>
+    <% end %>
+
   </div>
+
 </div>

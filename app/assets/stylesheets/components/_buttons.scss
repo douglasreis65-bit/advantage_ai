@@ -1,0 +1,38 @@
+// app/assets/stylesheets/components/_buttons.scss
+
+.btn-advantage {
+  @include btn-gradient($primary, $secondary);
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-family: $font-header;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: $dark-bg;
+  border: none;
+  display: inline-block;
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba($primary, 0.3);
+    color: $dark-bg;
+  }
+}
+
+// Botão secundário (outline)
+.btn-outline-ai {
+  background: transparent;
+  border: 1px solid $glass-border;
+  color: $white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  transition: 0.3s;
+
+  &:hover {
+    background: $glass;
+    border-color: $primary;
+    color: $primary;
+  }
+}

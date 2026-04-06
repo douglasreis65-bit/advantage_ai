@@ -1,12 +1,107 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+// app/assets/stylesheets/components/_navbar.scss
+
+.navbar-advantage {
+  @extend .glass-effect; // Usa o efeito blur que definimos no base.scss
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0.8rem 2rem;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background: rgba($dark-bg, 0.7); // Fundo escuro semi-transparente
+  transition: all 0.4s ease;
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    img {
+      width: 32px;
+      height: 32px;
+      filter: drop-shadow(0 0 8px rgba($primary, 0.3));
+    }
+
+    span {
+      font-family: $font-header;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(to right, $white, $gray-muted);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .nav-link {
+    color: $white !important;
+    font-family: $font-header;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.7;
+    margin: 0 10px;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: $primary;
+      transition: width 0.3s ease;
+    }
+
+    &:hover {
+      opacity: 1;
+      &:after { width: 100%; }
+    }
+
+    &.active {
+      opacity: 1;
+      color: $primary !important;
+    }
+  }
+
+  // Estilo para o Avatar/Dropdown do usuário
+  .avatar {
+    width: 35px;
+    border-radius: 50%;
+    border: 2px solid $glass-border;
+    transition: 0.3s;
+    &:hover {
+      border-color: $primary;
+      transform: scale(1.05);
+    }
+  }
+
+  .dropdown-menu {
+    @extend .glass-effect;
+    background: rgba($dark-card, 0.95);
+    border-radius: 16px;
+    margin-top: 15px;
+    padding: 10px;
+
+    .dropdown-item {
+      color: $white;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      padding: 8px 16px;
+      &:hover {
+        background: rgba($primary, 0.1);
+        color: $primary;
+      }
+    }
+  }
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
-}
-
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+// Mobile Toggle
+.navbar-toggler {
+  border: none;
+  &:focus { box-shadow: none; }
+  .navbar-toggler-icon {
+    filter: invert(1); // Deixa o ícone branco no fundo escuro
+  }
 }
