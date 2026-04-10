@@ -1,107 +1,161 @@
-// app/assets/stylesheets/components/_navbar.scss
+// ==========================================================================
+// AdvantageIA - Navbar "Meta Premium"
+// ==========================================================================
+
+// Cores de referência (caso não estejam globais)
+$meta-blue:   #0668E1;
+$meta-border: #E4E6EB;
+$meta-bg:     #F0F2F5;
+$text-main:   #1C1E21;
+$text-muted:  #65676B;
 
 .navbar-advantage {
-  @extend .glass-effect; // Usa o efeito blur que definimos no base.scss
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  padding: 0.8rem 2rem;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  background: rgba($dark-bg, 0.7); // Fundo escuro semi-transparente
-  transition: all 0.4s ease;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid $meta-border;
+  padding: 0.8rem 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
+  // Logo
   .navbar-brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
+    color: $text-main;
 
-    img {
-      width: 32px;
-      height: 32px;
-      filter: drop-shadow(0 0 8px rgba($primary, 0.3));
-    }
-
-    span {
-      font-family: $font-header;
-      font-weight: 700;
-      font-size: 1.2rem;
-      letter-spacing: -0.5px;
-      background: linear-gradient(to right, $white, $gray-muted);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .brand-ai {
+      color: $meta-blue;
     }
   }
 
-  .nav-link {
-    color: $white !important;
-    font-family: $font-header;
+  // Links e Botão de Login (Visitante)
+  .btn-login {
+    color: $text-main;
+    font-weight: 600;
+    text-decoration: none;
+    margin-right: 1.5rem;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $meta-blue;
+    }
+  }
+
+  // Botão Principal de Ação (Analisar Agora)
+  .btn-nav-action {
+    background-color: $meta-blue;
+    color: #FFFFFF;
+    font-weight: 600;
+    border-radius: 24px;
+    padding: 10px 24px;
     font-size: 0.9rem;
-    font-weight: 500;
-    opacity: 0.7;
-    margin: 0 10px;
-    position: relative;
-
-    &:after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -4px;
-      left: 0;
-      background: $primary;
-      transition: width 0.3s ease;
-    }
+    text-decoration: none;
+    border: none;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
-      opacity: 1;
-      &:after { width: 100%; }
+      background-color: darken($meta-blue, 5%);
+      box-shadow: 0 4px 12px rgba(6, 104, 225, 0.2);
+      color: #FFFFFF;
+      transform: translateY(-1px);
     }
 
-    &.active {
-      opacity: 1;
-      color: $primary !important;
+    &:active {
+      transform: translateY(0);
     }
   }
 
-  // Estilo para o Avatar/Dropdown do usuário
-  .avatar {
-    width: 35px;
-    border-radius: 50%;
-    border: 2px solid $glass-border;
-    transition: 0.3s;
+  // Link do Dropdown (Logado)
+  .user-dropdown-link {
+    color: $text-main !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background 0.2s;
+
     &:hover {
-      border-color: $primary;
-      transform: scale(1.05);
+      background-color: $meta-bg;
+    }
+
+    &::after {
+      margin-left: 0.5em;
+      vertical-align: 0.255em;
+      content: "";
+      border-top: 0.3em solid;
+      border-right: 0.3em solid transparent;
+      border-bottom: 0;
+      border-left: 0.3em solid transparent;
     }
   }
 
+  // Menu Suspenso
   .dropdown-menu {
-    @extend .glass-effect;
-    background: rgba($dark-card, 0.95);
-    border-radius: 16px;
-    margin-top: 15px;
-    padding: 10px;
+    border-radius: 10px;
+    margin-top: 12px;
+    padding: 8px;
+    min-width: 220px;
+    background-color: #FFFFFF;
+    border: 1px solid $meta-border !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
 
     .dropdown-item {
-      color: $white;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      padding: 8px 16px;
-      &:hover {
-        background: rgba($primary, 0.1);
-        color: $primary;
+      padding: 12px 16px;
+      border-radius: 6px;
+      color: $text-main;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s;
+
+      i {
+        width: 20px;
+        color: $text-muted;
+        margin-right: 10px;
+        font-size: 0.85rem;
       }
+
+      &:hover {
+        background-color: $meta-bg;
+        color: $meta-blue;
+
+        i {
+          color: $meta-blue;
+        }
+      }
+
+      &.text-danger:hover {
+        background-color: #FFF0F0;
+        color: #DC3545;
+        i { color: #DC3545; }
+      }
+    }
+
+    .dropdown-divider {
+      border-top: 1px solid $meta-border;
+      margin: 8px 0;
     }
   }
 }
 
-// Mobile Toggle
-.navbar-toggler {
-  border: none;
-  &:focus { box-shadow: none; }
-  .navbar-toggler-icon {
-    filter: invert(1); // Deixa o ícone branco no fundo escuro
+// Responsividade para Mobile
+@media (max-width: 991.98px) {
+  .navbar-advantage {
+    .btn-nav-action {
+      display: block;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .btn-login {
+      display: block;
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    .user-dropdown-link {
+      padding: 10px 0;
+    }
   }
 }

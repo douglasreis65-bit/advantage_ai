@@ -1,0 +1,119 @@
+<% content_for :body_class, "force-light-bg" %>
+
+<div class="analyses-history-container py-5">
+  <div class="container">
+
+    <%# Header %>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="fw-bold text-main m-0">Meus Diagnósticos</h2>
+        <p class="text-muted small mb-0">Gerencie e filtre suas análises de performance e criativos.</p>
+      </div>
+      <%= link_to select_type_analyses_path, class: "btn-link-meta" do %>
+        <i class="fa-solid fa-plus me-1"></i> Nova Análise
+      <% end %>
+    </div>
+
+    <%# Cards de Indicadores - Todos Padronizados no Azul Meta %>
+    <div class="row g-4 mb-5 text-center">
+      <div class="col-md-4">
+        <div class="history-card">
+          <span class="form-label-meta text-highlight">Total Performance</span>
+          <h3 class="fw-bold text-highlight mb-0">
+            <%= @analyses.where(analysis_type: 'performance').count %>
+          </h3>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="history-card">
+          <span class="form-label-meta text-highlight">ROAS Médio Realizado</span>
+          <h3 class="fw-bold text-highlight mb-0">
+            <% if Analysis.column_names.include?('roas_detected') %>
+              <%= @analyses.where(analysis_type: 'performance', status: 'completed').average(:roas_detected)&.round(2) || "0.0" %>x
+            <% else %>
+              0.0x
+            <% end %>
+          </h3>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="history-card">
+          <span class="form-label-meta text-highlight">Diagnósticos Pendentes</span>
+          <h3 class="fw-bold text-highlight mb-0">
+            <%= @analyses.where(status: 'processing').count %>
+          </h3>
+        </div>
+      </div>
+    </div>
+
+    <%# Filtros de Usabilidade %>
+    <div class="d-flex gap-2 mb-4">
+      <%= link_to "Todos", analyses_path, class: "filter-tag #{'active' if params[:type].blank?}" %>
+      <%= link_to "Performance", analyses_path(type: 'performance'), class: "filter-tag #{'active' if params[:type] == 'performance'}" %>
+      <%= link_to "Criativos", analyses_path(type: 'creative'), class: "filter-tag #{'active' if params[:type] == 'creative'}" %>
+    </div>
+
+    <%# Tabela com Diferenciação de Tipos %>
+    <div class="table-responsive shadow-sm">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Data / Identificação</th>
+            <th>Status</th>
+            <th>Resultado Chave</th>
+            <th class="text-end">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @analyses.each do |analysis| %>
+            <tr>
+              <td>
+                <% if analysis.analysis_type == 'performance' %>
+                  <span class="type-badge performance">
+                    <i class="fa-solid fa-chart-line me-1"></i> Performance
+                  </span>
+                <% else %>
+                  <span class="type-badge creative">
+                    <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Criativo
+                  </span>
+                <% end %>
+              </td>
+              <td>
+                <div class="fw-bold text-main"><%= analysis.campaign_objective&.upcase || "ANÁLISE" %></div>
+                <div class="text-muted x-small"><%= analysis.created_at.strftime("%d/%m/%Y às %H:%M") %></div>
+              </td>
+              <td>
+                <span class="status-tag <%= analysis.status %>">
+                  <%= analysis.status == 'processing' ? 'Processando' : analysis.status.upcase %>
+                </span>
+              </td>
+              <td>
+                <% if analysis.analysis_type == 'performance' %>
+                  <span class="fw-bold text-highlight small">
+                    ROAS <%= Analysis.column_names.include?('roas_detected') ? (analysis.roas_detected || "0.0") : "0.0" %>x
+                  </span>
+                <% else %>
+                  <span class="text-muted small italic">Sugestões de Anúncios</span>
+                <% end %>
+              </td>
+              <td class="text-end">
+                <%= link_to analysis_path(analysis), class: "btn-view" do %>
+                  Ver Relatório
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <% if @analyses.empty? %>
+        <div class="p-5 text-center">
+          <i class="fa-solid fa-folder-open text-muted mb-3 fs-1 opacity-25"></i>
+          <p class="text-muted small">Nenhuma análise encontrada.</p>
+          <%= link_to "Começar agora", select_type_analyses_path, class: "empty-state-link" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

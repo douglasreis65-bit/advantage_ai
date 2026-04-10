@@ -1,0 +1,88 @@
+// app/assets/stylesheets/pages/_profile.scss
+
+body.force-light-bg {
+  background-color: #f8f9fa !important;
+}
+
+.profile-container {
+  background-color: #f8f9fa !important;
+  min-height: 100vh;
+
+  .text-main { color: #1a1a1a !important; }
+  .text-highlight { color: #007bff !important; } // Azul Meta
+
+  // Card de Perfil
+  .profile-card {
+    background: #ffffff !important;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+
+    &.border-danger-subtle {
+      border: 1px dashed rgba(220, 53, 69, 0.3);
+    }
+  }
+
+  // Estilo dos Inputs
+  .form-label-meta {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  .form-control-meta {
+    background: #fcfdfe !important;
+    border: 1px solid #e9ecef !important;
+    border-radius: 12px !important;
+    padding: 12px 15px !important;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:focus {
+      border-color: #007bff !important;
+      box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1) !important;
+      background: #fff !important;
+      outline: none;
+    }
+  }
+
+  // Botão Salvar (Gradiente AdVantageIA)
+  .btn-save-meta {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+    color: white !important;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 123, 255, 0.25);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  // Botão Excluir
+  .btn-delete-link {
+    background: transparent;
+    color: #dc3545;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: underline;
+    padding: 0;
+    cursor: pointer;
+
+    &:hover {
+      color: #a71d2a;
+    }
+  }
+}

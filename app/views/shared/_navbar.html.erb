@@ -1,47 +1,49 @@
-<nav class="navbar navbar-expand-lg navbar-advantage">
-  <div class="container-fluid">
-    <%# Logo e Nome do Projeto %>
+<nav class="navbar navbar-expand-lg sticky-top navbar-advantage">
+  <div class="container">
     <%= link_to root_path, class: "navbar-brand" do %>
-      <%= image_tag "logo.png", alt: "AdVantage AI" if Rails.application.assets.find_asset('logo.png') %>
-      <span>AdVantage<span style="color: #00F5FF;">AI</span></span>
+      AdVantage<span class="brand-ai">IA</span>
     <% end %>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto align-items-center">
         <% if user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to "Nova Análise", select_type_analyses_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Dashboard", "#", class: "nav-link" %>
+          <li class="nav-item me-3">
+            <%= link_to "Analisar Agora", select_type_analyses_path, class: "btn-nav-action" %>
           </li>
 
-          <li class="nav-item dropdown ms-3">
-            <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <% if current_user.respond_to?(:photo) && current_user.photo.attached? %>
-                <%= cl_image_tag current_user.photo.key, class: "avatar" %>
-              <% else %>
-                <img src="https://kitt.lewagon.com/placeholder/users/ssaunier" class="avatar" alt="User Avatar">
-              <% end %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle user-dropdown-link" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="far fa-user-circle me-1"></i> <%= current_user.email.split('@').first %>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><%= link_to "Perfil", "#", class: "dropdown-item" %></li>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="userDropdown">
+              <li>
+                <%= link_to analyses_path, class: "dropdown-item" do %>
+                  <i class="fas fa-history me-2 small"></i> Histórico de Análises
+                <% end %>
+              </li>
+              <li>
+                <%= link_to edit_user_registration_path, class: "dropdown-item" do %>
+                  <i class="fas fa-user-cog me-2 small"></i> Meu Perfil
+                <% end %>
+              </li>
               <li><hr class="dropdown-divider"></li>
               <li>
-                <%= link_to "Sair", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item text-danger" %>
+                <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item text-danger" do %>
+                  <i class="fas fa-sign-out-alt me-2 small"></i> Sair
+                <% end %>
               </li>
             </ul>
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+            <%= link_to "Entrar", new_user_session_path, class: "btn-login" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Começar agora", new_user_registration_path, class: "btn-advantage ms-lg-3 px-4 py-2 text-dark", style: "font-size: 0.85rem;" %>
+            <%= link_to "Começar Análise Gratuita", new_user_registration_path, class: "btn-nav-action" %>
           </li>
         <% end %>
       </ul>

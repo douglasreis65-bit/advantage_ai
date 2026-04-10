@@ -7,7 +7,10 @@ class Analysis < ApplicationRecord
   has_many_attached :ad_artworks
   has_many_attached :event_manager_screenshots
 
-  # AS CONSTANTES PRECISAM ESTAR AQUI DENTRO:
+  # Status possíveis para o fluxo do diagnóstico
+  STATUSES = %w[processing completed failed].freeze
+
+  # Plataformas de E-commerce/Infoprodutos
   PLATFORMS = [
     "Shopify", "Nuvemshop", "Tray", "Loja Integrada", "VTEX", "WooCommerce",
     "Hotmart", "Kiwify", "CartPanda", "Yampi", "Bagy", "Wix", "Magento",
@@ -20,16 +23,33 @@ class Analysis < ApplicationRecord
     "ClickBank", "Xtech", "Webnode", "Ideris", "Outros"
   ].freeze
 
-  META_OBJECTIVES = [
-    "Reconhecimento", "Tráfego", "Engajamento", "Cadastros",
-    "Promoção do app", "Vendas"
-  ].freeze
-
+  # Validações
   validates :campaign_objective, presence: true
+  validates :conversion_location, presence: true
+  validates :status, inclusion: { in: STATUSES }
 
+  # Callbacks
+  before_validation :set_default_status, on: :create
   before_create :generate_public_token
 
+  # Métodos auxiliares para facilitar na View/Controller
+  def completed?
+    status == 'completed'
+  end
+
+  def processing?
+    status == 'processing'
+  end
+
+  def failed?
+    status == 'failed'
+  end
+
   private
+
+  def set_default_status
+    self.status ||= 'processing'
+  end
 
   def generate_public_token
     self.public_token = SecureRandom.uuid

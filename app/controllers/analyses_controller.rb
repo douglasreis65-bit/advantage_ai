@@ -23,6 +23,15 @@ class AnalysesController < ApplicationController
     end
   end
 
+  def index
+    @analyses = current_user.analyses.order(created_at: :desc)
+
+    # Aplica o filtro se o parâmetro :type estiver presente
+    if params[:type].present?
+      @analyses = @analyses.where(analysis_type: params[:type])
+    end
+  end
+
   def create
     @analysis = current_user.analyses.build(analysis_params)
 

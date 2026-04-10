@@ -1,1 +1,87 @@
-// Specific CSS for your home-page
+// Paleta Restrita e Profissional
+$meta-blue: #0668E1;
+$meta-bg: #F0F2F5;     // Off-white de fundo
+$meta-card: #FFFFFF;   // Branco dos cards
+$meta-border: #E4E6EB; // Prateado das bordas
+
+// Hierarquia de Texto (Apenas 3 tons)
+$text-main: #1C1E21;    // Títulos e corpo principal (quase preto)
+$text-muted: #65676B;   // Descrições e labels (cinza médio profissional)
+$text-white: #FFFFFF;   // Texto sobre botões
+
+.home-page-wrapper {
+  background-color: $meta-bg;
+  color: $text-main;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  .hero-section {
+    padding: 120px 0 80px;
+    background: radial-gradient(circle at top, #FFFFFF 0%, $meta-bg 100%);
+  }
+
+  // O destaque que você gostou
+  .text-gradient {
+    background: linear-gradient(90deg, #0668E1, #00A1FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+  }
+
+  .text-main { color: $text-main; }
+  .text-muted-meta { color: $text-muted; font-weight: 400; }
+
+  .meta-card {
+    background: $meta-card;
+    border: 1px solid $meta-border;
+    border-radius: 8px; // Cantos um pouco mais sérios
+    padding: 2rem;
+    transition: all 0.3s ease;
+
+    h4 { color: $text-main; font-size: 1.25rem; margin-bottom: 0.75rem; }
+    p { color: $text-muted; font-size: 0.95rem; line-height: 1.5; }
+
+    &:hover {
+      border-color: darken($meta-border, 10%);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  // Ícones agora discretos, sem cores "carnaval"
+  .icon-step {
+    color: $meta-blue;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+
+  .btn-primary {
+    background-color: #0668E1; // Azul oficial Meta
+    border: none;
+    font-weight: 600;
+    padding: 14px 36px;
+    color: #FFFFFF;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 14px rgba(6, 104, 225, 0.2); // Sombra suave no tom do azul
+
+    &:hover {
+      background-color: #0559C1;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(6, 104, 225, 0.3);
+      color: #FFFFFF;
+    }
+
+    &:active {
+    transform: translateY(0);
+    }
+  }
+
+  .btn-outline-dark {
+    border: 1px solid $meta-border;
+    color: $text-main;
+    &:hover { background: white; border-color: $text-main; }
+  }
+}

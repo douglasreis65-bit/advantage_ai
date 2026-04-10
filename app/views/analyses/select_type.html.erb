@@ -1,41 +1,39 @@
 <div class="selection-container">
-
-  <header class="selection-header">
+  <header class="selection-header" data-aos="fade-down">
     <div class="badge-ai">Seleção do Motor AI</div>
     <h1>O que vamos otimizar hoje?</h1>
-    <p>Escolha o foco do seu diagnóstico para que nossos agentes processem os dados com precisão técnico-visual.</p>
+    <p>Escolha o foco do seu diagnóstico para que nossos agentes processem os dados com precisão técnica.</p>
   </header>
 
-  <div class="selection-cards-grid">
+  <div class="selection-cards-grid" data-aos="fade-up" data-aos-delay="100">
 
-    <%# Card 1: Performance - Aponta para 'new' passando o parâmetro type %>
-    <%= link_to new_analysis_path(type: 'performance'), class: "analysis-card card-performance" do %>
+    <%# Card 1: Performance %>
+    <%= link_to new_analysis_path(type: 'performance'), class: "analysis-card" do %>
       <div>
         <div class="card-icon">
-          <i class="fa-solid fa-server"></i>
+          <i class="fa-solid fa-chart-line"></i>
         </div>
         <h3>Diagnóstico de Performance</h3>
-        <p>Análise profunda de métricas (CTR, CPA) e extração automática de gargalos do funil via relatório CSV.</p>
+        <p>Análise profunda de métricas de funil (CTR, CPA, ROAS) e identificação de gargalos via relatórios CSV do Meta Ads.</p>
       </div>
       <div class="card-link">
-        Iniciar Motor <i class="fa-solid fa-arrow-right-long"></i>
+        Iniciar Análise <i class="fa-solid fa-arrow-right"></i>
       </div>
     <% end %>
 
-    <%# Card 2: Creative - Aponta para 'new' passando o parâmetro type %>
-    <%= link_to new_analysis_path(type: 'creative'), class: "analysis-card card-creative" do %>
+    <%# Card 2: Creative %>
+    <%= link_to new_analysis_path(type: 'creative'), class: "analysis-card" do %>
       <div>
         <div class="card-icon">
-          <i class="fa-solid fa-brain"></i>
+          <i class="fa-solid fa-eye"></i>
         </div>
         <h3>Diagnóstico Visual & Copy</h3>
-        <p>Suba suas artes para avaliar ganchos, retenção de atenção e clareza da oferta pela IA generativa.</p>
+        <p>Avaliação de ganchos, retenção de atenção e clareza da oferta usando visão computacional e inteligência criativa.</p>
       </div>
       <div class="card-link">
-        Iniciar Motor <i class="fa-solid fa-arrow-right-long"></i>
+        Iniciar Análise <i class="fa-solid fa-arrow-right"></i>
       </div>
     <% end %>
 
   </div>
-
 </div>

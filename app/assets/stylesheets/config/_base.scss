@@ -13,19 +13,18 @@
 }
 
 @mixin glass-card {
-  background: $glass;
+  background: rgba(255, 255, 255, 0.05); // Fallback caso $glass não exista
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid $glass-border;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 // ==========================================================================
-// 2. CONFIGURAÇÕES GLOBAIS E RESET (Elimina faixas brancas)
+// 2. CONFIGURAÇÕES GLOBAIS E RESET
 // ==========================================================================
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500;700&display=swap');
 
-// Reset agressivo para garantir fluidez entre Navbar e Body
 * {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
@@ -34,9 +33,11 @@
 }
 
 html, body {
-  background-color: #030305 !important; // Cor profunda do AdVantage AI
-  color: $white;
-  font-family: $font-body;
+  // Mantemos o background escuro padrão, mas as páginas com .force-light-bg (como Perfil e Histórico)
+  // vão sobrescrever isso conforme configuramos antes.
+  background-color: #030305;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
   line-height: 1.6;
@@ -44,7 +45,6 @@ html, body {
   height: 100%;
 }
 
-// Garante que o conteúdo principal ocupe a tela toda sem margens laterais
 main, .main-container {
   padding: 0 !important;
   margin: 0 !important;
@@ -52,10 +52,10 @@ main, .main-container {
 }
 
 h1, h2, h3, h4 {
-  font-family: $font-header;
+  font-family: 'Outfit', sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: $white;
+  color: #ffffff;
 }
 
 a {
@@ -72,7 +72,6 @@ a {
   @include glass-card;
 }
 
-// Alinhamento para as mensagens de notice/alert do Devise
 .notice, .alert {
   margin: 0 !important;
   text-align: center;
@@ -80,7 +79,7 @@ a {
   padding: 10px;
   position: absolute;
   width: 100%;
-  z-index: 1001; // Fica acima da navbar se necessário
+  z-index: 1001;
 }
 
 .x-small {
@@ -88,12 +87,12 @@ a {
   line-height: 1.4;
 }
 
+// Corrigindo para usar a cor fixa ou variável caso exista
 .text-purple {
-  color: $secondary;
-  text-shadow: 0 0 8px rgba($secondary, 0.4);
+  color: #6610f2;
+  text-shadow: 0 0 8px rgba(102, 16, 242, 0.4);
 }
 
-// Helper para esconder elementos vazios (como as tags <p> do notice)
 p:empty {
   display: none;
 }
