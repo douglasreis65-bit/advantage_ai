@@ -39,11 +39,12 @@
             </ul>
           </li>
         <% else %>
-          <li class="nav-item">
-            <%= link_to "Entrar", new_user_session_path, class: "btn-login" %>
+          <%# Ajustado para manter o link de Entrar discreto e o Criar Conta em destaque %>
+          <li class="nav-item me-2">
+            <%= link_to "Entrar", new_user_session_path, class: "nav-link text-slate-700 font-weight-bold" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Começar Análise Gratuita", new_user_registration_path, class: "btn-nav-action" %>
+            <%= link_to "Criar conta", new_user_registration_path, class: "btn-nav-action" %>
           </li>
         <% end %>
       </ul>

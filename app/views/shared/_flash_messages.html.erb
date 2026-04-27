@@ -1,0 +1,21 @@
+<div id="flash-container" class="position-fixed top-0 end-0 p-4" style="z-index: 9999;">
+  <% flash.each do |type, message| %>
+    <%# O data-controller="flash" é o que ativa o temporizador %>
+    <div class="advantage-toast" data-controller="flash">
+      <div class="toast-content">
+        <div class="toast-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast-text">
+          <strong>Sucesso</strong>
+          <span><%= message %></span>
+        </div>
+      </div>
+      <%# O data-action="click->flash#dismiss" ativa o botão X %>
+      <button class="btn-close-toast" data-action="click->flash#dismiss">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="toast-progress"></div>
+    </div>
+  <% end %>
+</div>

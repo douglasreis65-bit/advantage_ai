@@ -1,0 +1,12 @@
+pt-BR:
+  devise:
+    sessions:
+      signed_in: "Bem-vindo! Você acessou sua conta com sucesso."
+      signed_out: "Até logo! Você saiu da conta com sucesso."
+      already_signed_in: "Você já está logado."
+    registrations:
+      signed_up: "Conta criada com sucesso! Bem-vindo ao AdVantageIA."
+      updated: "Perfil atualizado com sucesso."
+    failure:
+      invalid: "E-mail ou senha inválidos."
+      not_found_in_database: "E-mail ou senha inválidos."

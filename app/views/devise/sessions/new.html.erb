@@ -1,0 +1,50 @@
+<div class="auth-container">
+  <div class="auth-card-wrapper">
+
+    <div class="auth-header">
+      <h2 class="auth-title">Acesse sua conta</h2>
+    </div>
+
+    <div class="auth-card">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "auth-form" }) do |f| %>
+
+        <div class="form-group">
+          <%= f.label :email, "E-mail" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "seu@email.com" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password, "Senha" %>
+          <%= f.password_field :password, autocomplete: "current-password", placeholder: "••••••••" %>
+        </div>
+
+        <div class="form-options">
+          <% if devise_mapping.rememberable? %>
+            <div class="remember-me">
+              <%= f.check_box :remember_me %>
+              <%= f.label :remember_me, "Lembrar-me" %>
+            </div>
+          <% end %>
+
+          <%= link_to "Esqueceu a senha?", new_password_path(resource_name), class: "auth-link-alt" %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "Acessar", class: "btn-primary-full" %>
+        </div>
+      <% end %>
+
+      <div class="auth-divider">
+        <span>Ainda não possui uma conta?</span>
+      </div>
+
+      <div class="auth-secondary-action">
+        <%= link_to "Criar conta", new_registration_path(resource_name), class: "btn-secondary-full" %>
+      </div>
+    </div>
+
+    <footer class="auth-footer">
+      ADVANTAGE I.A. © 2026
+    </footer>
+  </div>
+</div>
